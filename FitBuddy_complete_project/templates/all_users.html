@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FitBuddy Dashboard</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container wide">
+<div class="topbar"><a href="/">← FitBuddy</a><span>Admin / Demo Dashboard</span></div>
+<h1>All Users</h1>
+{% if not users %}<div class="card"><p>No users yet.</p></div>{% endif %}
+{% for user in users %}
+<section class="card user-card">
+  <div class="user-head"><div><h2>{{ user.name }}</h2><p>{{ user.user_id }} · {{ user.goal }} · {{ user.intensity }}</p></div>
+  <form action="/delete-user" method="post"><input type="hidden" name="user_id" value="{{ user.user_id }}"><button class="danger" type="submit">Delete</button></form></div>
+  {% for plan in user.plans %}
+  <details><summary>Plan #{{ plan.id }} — {{ plan.created_at }}</summary>
+    <h3>Original</h3><pre>{{ plan.original_plan }}</pre>
+    {% if plan.updated_plan %}<h3>Updated</h3><pre>{{ plan.updated_plan }}</pre>{% endif %}
+    {% if plan.feedback %}<p><b>Feedback:</b> {{ plan.feedback }}</p>{% endif %}
+  </details>
+  {% endfor %}
+</section>
+{% endfor %}
+</main></body></html>

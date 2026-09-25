@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FitBuddy</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+  <section class="hero">
+    <p class="eyebrow">AI FITNESS PLANNER</p>
+    <h1>FitBuddy</h1>
+    <p>Generate a personalized 7-day fitness plan and a practical nutrition/recovery tip.</p>
+  </section>
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+  <form class="card form-grid" action="/generate-workout" method="post">
+    <label>Name<input name="name" required maxlength="120"></label>
+    <label>User ID<input name="user_id" required maxlength="80"></label>
+    <label>Age<input name="age" type="number" min="13" max="100" required></label>
+    <label>Weight<input name="weight" placeholder="e.g. 60 kg" required></label>
+    <label>Fitness goal
+      <select name="goal" required>
+        <option value="general wellness">General wellness</option>
+        <option value="weight loss">Weight loss</option>
+        <option value="muscle gain">Muscle gain</option>
+        <option value="flexibility">Flexibility</option>
+      </select>
+    </label>
+    <label>Intensity
+      <select name="intensity" required>
+        <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>
+      </select>
+    </label>
+    <button type="submit">Generate Plan</button>
+  </form>
+  <p class="center"><a href="/view-all-users">Open admin/demo dashboard</a></p>
+</main>
+</body></html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FitBuddy Result</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+  <div class="topbar"><a href="/">← New plan</a><a href="/view-all-users">Dashboard</a></div>
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+  {% if message %}<div class="alert success">{{ message }}</div>{% endif %}
+  {% if user %}
+  <section class="card">
+    <h1>Hello, {{ user.name }} 👋</h1>
+    <div class="facts">
+      <span>User ID: <b>{{ user.user_id }}</b></span><span>Age: <b>{{ user.age }}</b></span>
+      <span>Weight: <b>{{ user.weight }}</b></span><span>Goal: <b>{{ user.goal }}</b></span>
+      <span>Intensity: <b>{{ user.intensity }}</b></span>
+    </div>
+  </section>
+  {% endif %}
+  {% if plan %}
+  <section class="card"><h2>7-Day Workout Plan</h2><pre>{{ plan.updated_plan or plan.original_plan }}</pre></section>
+  <section class="card tip"><h2>Nutrition / Recovery Tip</h2><p>{{ plan.nutrition_tip }}</p></section>
+  <section class="card">
+    <h2>Refine your plan</h2>
+    <form action="/submit-feedback" method="post">
+      <input type="hidden" name="user_id" value="{{ user.user_id }}">
+      <label>Feedback<textarea name="feedback" required maxlength="2000" placeholder="Example: make the plan easier or add more rest days"></textarea></label>
+      <button type="submit">Update with AI</button>
+    </form>
+    {% if plan.feedback %}<p class="muted"><b>Last feedback:</b> {{ plan.feedback }}</p>{% endif %}
+  </section>
+  {% endif %}
+</main>
+</body></html>
